@@ -39,7 +39,7 @@ function Tracklist() {
                     trackRef={hasMore && tracks.length === i + 1 ? lastTrackElementRef : null}
                 />
             ))}
-            {loading && ["opacity-100", "opacity-70", "opacity-50", "opacity-30"]
+            {loading && ["opacity-100", "opacity-70", "opacity-50", "opacity-30", "opacity-10"]
                 .map(opacity => (<TrackLoadingSkeleton key={opacity} className={opacity}/>))}
             {error && <TrackLoadingSkeleton key={"error"} className={"bg-red-700"}/>}
         </div>

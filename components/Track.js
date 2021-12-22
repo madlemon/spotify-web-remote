@@ -1,9 +1,10 @@
 import useSpotify from "../hooks/useSpotify";
-import {PauseIcon, PlayIcon} from "@heroicons/react/solid";
 import React from 'react';
-import {millisToMinutesAndSeconds} from "../lib/time";
 import {currentTrackIdState, isPlayingState} from "../atoms/playerAtom";
 import {useRecoilState} from "recoil";
+import {PauseIcon, PlayIcon} from "@heroicons/react/solid";
+import {MusicNoteIcon} from "@heroicons/react/outline";
+import {millisToMinutesAndSeconds} from "../lib/time";
 
 function Track({track, tracknumber, onClick, highlighted, trackRef}) {
     const spotifyApi = useSpotify();
@@ -36,10 +37,13 @@ function Track({track, tracknumber, onClick, highlighted, trackRef}) {
              ref={trackRef}>
             <div className="flex items-center space-x-4">
                 <div>
-                    <p className={`w-7 ${highlighted ? "hidden" : "group-hover:hidden"}
-                    ${currentTrackIsPlayed ? "text-green-500" : ""}`}>
-                        {tracknumber + 1}
-                    </p>
+                    {currentTrackIsPlayed ? <MusicNoteIcon
+                            className={`w-7 p-1 text-green-500 animate-bounce ${highlighted ? "hidden" : "group-hover:hidden"}`}
+                        /> :
+                        <p className={`w-7 text-center ${highlighted ? "hidden" : "group-hover:hidden"}`}>
+                            {tracknumber + 1}
+                        </p>
+                    }
 
                     {
                         currentTrackIsPlayed ?

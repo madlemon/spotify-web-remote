@@ -6,7 +6,7 @@ function TrackLoadingSkeleton({className}) {
                 <div>
                     <div className="w-7 h-4 bg-zinc-700 rounded-lg"/>
                 </div>
-                <div className="w-10 h-10 bg-zinc-500 rounded-lg"/>
+                <div className="w-10 h-10 bg-zinc-500"/>
                 <div>
                     <div className="w-24 lg:w-36 h-4 bg-zinc-500 rounded-lg my-2"/>
                     <div className="w-14 lg:w-20 h-4 bg-zinc-700 rounded-lg my-2"/>
