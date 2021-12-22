@@ -36,10 +36,10 @@ function Center() {
             .then((data) => setPlaylist(data.body))
     }, [session, spotifyApi, playlistId]);
 
-
     return (
-        <div className="flex flex-grow flex-col text-white
-        h-screen overflow-y-scroll scrollbar-hide bg-zinc-900">
+        <div key={playlistId} // force rerender of component to reset scroll position & offset
+             className="flex flex-grow flex-col text-white
+                        h-screen overflow-y-scroll scrollbar-hide bg-zinc-900">
             <header className="absolute top-5 right-5">
                 <div className="flex items-center bg-black space-x-3
                 opacity-90 hover:opacity-80 cursor-pointer rounded-full

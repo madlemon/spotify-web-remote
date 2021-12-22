@@ -9,3 +9,4 @@ export const playlistState = atom({
     key: 'playlistAtomState', // unique ID (with respect to other atoms/selectors)
     default: null, // default value (aka initial value)
 });
+

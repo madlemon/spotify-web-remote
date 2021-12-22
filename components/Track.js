@@ -5,7 +5,7 @@ import {millisToMinutesAndSeconds} from "../lib/time";
 import {currentTrackIdState, isPlayingState} from "../atoms/playerAtom";
 import {useRecoilState} from "recoil";
 
-function Track({track, tracknumber, onClick, highlighted}) {
+function Track({track, tracknumber, onClick, highlighted, trackRef}) {
     const spotifyApi = useSpotify();
     const [currentTrackId, setCurrentTrackId] = useRecoilState(currentTrackIdState);
     const [isPlaying, setIsPlaying] = useRecoilState(isPlayingState);
@@ -32,7 +32,8 @@ function Track({track, tracknumber, onClick, highlighted}) {
     return (
         <div className={`grid grid-cols-2 rounded-lg px-4 py-2 group 
                          ${highlighted ? "bg-zinc-600" : "hover:bg-zinc-800"}`}
-             onClick={onClick}>
+             onClick={onClick}
+             ref={trackRef}>
             <div className="flex items-center space-x-4">
                 <div>
                     <p className={`w-7 ${highlighted ? "hidden" : "group-hover:hidden"}
