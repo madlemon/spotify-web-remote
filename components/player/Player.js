@@ -6,9 +6,11 @@ import useTrackInfo from "../../hooks/useTrackInfo";
 import VolumeControl from "./VolumeControl";
 import PlayerControl from "./PlayerControl";
 import useInterval from "../../hooks/useInterval";
+import {useSession} from "next-auth/react";
 
 function Player() {
     const spotifyApi = useSpotify()
+    const {data: session} = useSession();
     const [currentTrackId, setCurrentTrackId] = useRecoilState(currentTrackIdState)
     const trackInfo = useTrackInfo()
     const setIsPlaying = useSetRecoilState(isPlayingState)
@@ -38,7 +40,7 @@ function Player() {
             fetchCurrentPlaybackState()
             fetchCurrentPlayingTrack()
         }
-    }, [currentTrackId, spotifyApi])
+    }, [session, currentTrackId, spotifyApi])
 
     useInterval(() => {
         fetchCurrentPlaybackState()

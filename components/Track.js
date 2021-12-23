@@ -6,17 +6,20 @@ import {PauseIcon, PlayIcon} from "@heroicons/react/solid";
 import {MusicNoteIcon} from "@heroicons/react/outline";
 import {millisToMinutesAndSeconds} from "../lib/time";
 
-function Track({track, tracknumber, onClick, highlighted, trackRef}) {
+function Track({track, tracknumber, onClick, highlighted, trackRef, context_uri}) {
     const spotifyApi = useSpotify();
     const [currentTrackId, setCurrentTrackId] = useRecoilState(currentTrackIdState);
     const [isPlaying, setIsPlaying] = useRecoilState(isPlayingState);
-
     const playTrack = event => {
         event.stopPropagation();
         setCurrentTrackId(track.track.id);
         setIsPlaying(true);
         spotifyApi.play({
-                uris: [track.track.uri],
+                context_uri: context_uri,
+                position_ms: 0,
+                offset: {
+                    position: tracknumber
+                },
             }
         );
     }

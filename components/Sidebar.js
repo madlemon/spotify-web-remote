@@ -1,6 +1,6 @@
-import {HomeIcon, MenuAlt3Icon, PlusIcon, RssIcon, SearchIcon, ShieldExclamationIcon} from "@heroicons/react/outline";
+import {HomeIcon, MenuAlt3Icon, PlusIcon, RssIcon, SearchIcon} from "@heroicons/react/outline";
 import {HeartIcon} from "@heroicons/react/solid";
-import {signOut, useSession} from "next-auth/react";
+import {useSession} from "next-auth/react";
 import useSpotify from "../hooks/useSpotify";
 import React, {useEffect, useState} from 'react';
 import {useRecoilState} from "recoil";
@@ -26,13 +26,8 @@ function Sidebar() {
             className="flex flex-col h-screen text-gray-500 font-bold border-r border-gray-900 p-5
             text-xs lg:text-sm
             sm:max-w-[12rem] lg:max-w-[15rem]
-            hidden md:inline-flex">
+            hidden md:inline-flex print:md:hidden">
             <div className="space-y-4">
-                <button className="sidebar-item hover:bg-red-600"
-                        onClick={() => signOut()}>
-                    <ShieldExclamationIcon className="h-5 w-5"/>
-                    <p>Logout</p>
-                </button>
                 <button className="sidebar-item">
                     <HomeIcon className="h-5 w-5"/>
                     <p>Start</p>

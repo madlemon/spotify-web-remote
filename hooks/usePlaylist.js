@@ -1,13 +1,14 @@
 import useSpotify from "./useSpotify";
 import {useSession} from "next-auth/react";
 import {useRecoilValue} from "recoil";
-import {playlistIdState} from "../atoms/playlistAtom";
+import {playlistIdState, playlistState} from "../atoms/playlistAtom";
 import {useEffect, useState} from "react";
 
 function usePlaylist(offset = 0) {
     const spotifyApi = useSpotify()
     const {data: session} = useSession();
     const playlistId = useRecoilValue(playlistIdState)
+    const playlist = useRecoilValue(playlistState);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [tracks, setTracks] = useState([])
@@ -32,9 +33,9 @@ function usePlaylist(offset = 0) {
                 setLoading(false);
 
             }).catch(() => setError(true))
-    }, [session, spotifyApi, offset, playlistId])
+    }, [offset, playlistId])
 
-    return {loading, error, tracks, hasMore}
+    return {playlist, loading, error, tracks, hasMore}
 }
 
 export default usePlaylist

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {useSession} from "next-auth/react";
-import {ChevronDownIcon} from "@heroicons/react/outline";
+import {signOut, useSession} from "next-auth/react";
+import {ChevronDownIcon, ChevronUpIcon} from "@heroicons/react/outline";
 import {shuffle} from "lodash";
 import {playlistIdState, playlistState} from "../atoms/playlistAtom";
 import {useRecoilState, useRecoilValue} from "recoil";
@@ -36,21 +36,60 @@ function Center() {
             .then((data) => setPlaylist(data.body))
     }, [session, spotifyApi, playlistId]);
 
+    function Profile(props) {
+        const [open, setOpen] = useState(false)
+
+        return (
+            <header className="absolute top-5 right-5 z-50 print:hidden">
+                <div className="flex items-center bg-black space-x-3
+                opacity-90 hover:opacity-80 cursor-pointer rounded-full
+                p-1 pr-2"
+                     onClick={event => {
+                         event.stopPropagation()
+                         setOpen(!open)
+                     }}>
+                    <img className="rounded-full w-6 h-6"
+                         src={session?.user.image}
+                         alt="Benutzer-Avatar"/>
+                    <h2>{session?.user.name}</h2>
+                    {open ? <ChevronUpIcon className="h-5 w-5"/> : <ChevronDownIcon className="h-5 w-5"/>}
+                    {open && props.children}
+                </div>
+            </header>
+        )
+    }
+
+    function DropDownMenu() {
+        function MenuItem(props) {
+            return (
+                <div className="hover:bg-zinc-800 rounded-lg p-1"
+                     onClick={props.onClick}>
+                    {props.itemText}
+                </div>
+            )
+        }
+
+        return (
+            <div className="absolute top-10 w-60 translate-x-[-40%]
+                            rounded-lg bg-black p-1
+                            flex flex-col space-y-1 ">
+                <MenuItem itemText="Konto"/>
+                <MenuItem itemText="Profil"/>
+                <MenuItem itemText="Einstellungen"/>
+                <hr className="border-t-[0.1px] border-gray-900 "/>
+                <MenuItem itemText="Abmelden"
+                          onClick={() => signOut()}/>
+            </div>
+        )
+    }
+
     return (
         <div key={playlistId} // force rerender of component to reset scroll position & offset
              className="flex flex-grow flex-col text-white
                         h-screen overflow-y-scroll scrollbar-hide bg-zinc-900">
-            <header className="absolute top-5 right-5">
-                <div className="flex items-center bg-black space-x-3
-                opacity-90 hover:opacity-80 cursor-pointer rounded-full
-                p-1 pr-2">
-                    <img className="rounded-full w-10 h-10"
-                         src={session?.user.image}
-                         alt="Benutzer-Avatar"/>
-                    <h2>{session?.user.name}</h2>
-                    <ChevronDownIcon className="h-5 w-5"/>
-                </div>
-            </header>
+            <Profile>
+                <DropDownMenu/>
+            </Profile>
 
             <section
                 className={`flex items-end h-80 w-full space-x-7 p-7
