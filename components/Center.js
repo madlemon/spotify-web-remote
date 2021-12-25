@@ -99,9 +99,17 @@ function Center() {
                     src={playlist?.images?.[0]?.url}
                     alt="Playlist-Cover-Image"
                 />
-                <div>
+                <div className="flex flex-col space-y-1">
                     <p>PLAYLIST</p>
                     <h1 className="text-2xl md:text-5xl xl:text-7xl font-bold">{playlist?.name}</h1>
+                    <p className="hidden md:inline text-sm text-gray-400 pt-2">{playlist?.description}</p>
+                    <div className="flex space-x-1 text-sm text-gray-400">
+                        <p className="text-gray-200">{playlist?.owner.display_name}</p>
+                        <p className="hidden md:inline">●</p>
+                        <p className="hidden md:inline">{playlist?.followers.total} Mal „Gefällt mir”</p>
+                        <p>●</p>
+                        <p>{playlist?.tracks.total} Songs</p>
+                    </div>
                 </div>
             </section>
             <div>
