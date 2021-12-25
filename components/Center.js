@@ -1,35 +1,20 @@
 import React, {useEffect, useState} from 'react';
 import {signOut, useSession} from "next-auth/react";
 import {ChevronDownIcon, ChevronUpIcon} from "@heroicons/react/outline";
-import {shuffle} from "lodash";
 import {playlistIdState, playlistState} from "../atoms/playlistAtom";
 import {useRecoilState, useRecoilValue} from "recoil";
 import useSpotify from "../hooks/useSpotify";
 import Tracklist from "./Tracklist";
+import {generateGradientStopStyleFromRGB} from "../lib/color";
+import useDominantColor from "../hooks/useDominantColor";
 
 
 function Center() {
     const spotifyApi = useSpotify();
     const {data: session} = useSession();
-    const [color, setColor] = useState(null);
     const playlistId = useRecoilValue(playlistIdState);
     const [playlist, setPlaylist] = useRecoilState(playlistState);
-
-    let colors = ['from-red-600',
-        'from-orange-600',
-        'from-amber-500',
-        'from-lime-700',
-        'from-green-600',
-        'from-pink-700',
-        'from-fuchsia-700',
-        'from-rose-600',
-        'from-blue-500',
-        'from-indigo-700'];
-
-    useEffect(() => {
-        let randomizedColor = shuffle(colors).pop();
-        setColor(randomizedColor);
-    }, [playlistId]);
+    const dominantColor = useDominantColor(playlist?.images?.[0]?.url);
 
     useEffect(() => {
         spotifyApi.getPlaylist(playlistId)
@@ -92,8 +77,8 @@ function Center() {
             </Profile>
 
             <section
-                className={`flex items-end h-80 w-full space-x-7 p-7
-                bg-gradient-to-b to-zinc-900 ${color}`}>
+                className="flex items-end h-80 w-full space-x-7 p-7 bg-gradient-to-b to-zinc-900"
+                style={dominantColor && generateGradientStopStyleFromRGB(dominantColor[0], dominantColor[1], dominantColor[2])}>
                 <img
                     className="w-32 md:w-44 lg:w-56 shadow-2xl"
                     src={playlist?.images?.[0]?.url}
