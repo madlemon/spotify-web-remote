@@ -7,6 +7,7 @@ import VolumeControl from "./VolumeControl";
 import PlayerControl from "./PlayerControl";
 import useInterval from "../../hooks/useInterval";
 import {useSession} from "next-auth/react";
+import DeviceControl from "./DeviceControl";
 
 function Player() {
     const spotifyApi = useSpotify()
@@ -67,6 +68,7 @@ function Player() {
             </div>
 
             <PlayerControl trackInfo={trackInfo} progress={progressMs}/>
+            <DeviceControl/>
             <VolumeControl/>
         </div>
     )
