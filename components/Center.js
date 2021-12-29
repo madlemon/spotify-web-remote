@@ -1,25 +1,24 @@
 import React, {useEffect, useState} from 'react';
 import {signOut, useSession} from "next-auth/react";
-import {ChevronDownIcon, ChevronUpIcon} from "@heroicons/react/outline";
+import {ChevronDownIcon, ChevronUpIcon, MusicNoteIcon} from "@heroicons/react/outline";
 import {playlistIdState, playlistState} from "../atoms/playlistAtom";
 import {useRecoilState, useRecoilValue} from "recoil";
 import useSpotify from "../hooks/useSpotify";
-import Tracklist from "./Tracklist";
 import {generateGradientStopStyleFromRGB} from "../lib/color";
 import useDominantColor from "../hooks/useDominantColor";
-
+import Tracklist from "./Tracklist";
 
 function Center() {
-    const spotifyApi = useSpotify();
-    const {data: session} = useSession();
-    const playlistId = useRecoilValue(playlistIdState);
-    const [playlist, setPlaylist] = useRecoilState(playlistState);
-    const dominantColor = useDominantColor(playlist?.images?.[0]?.url);
+    const spotifyApi = useSpotify()
+    const {data: session} = useSession()
+    const playlistId = useRecoilValue(playlistIdState)
+    const [playlist, setPlaylist] = useRecoilState(playlistState)
+    const dominantColor = useDominantColor(playlist?.images?.[0]?.url)
 
     useEffect(() => {
         spotifyApi.getPlaylist(playlistId)
             .then((data) => setPlaylist(data.body))
-    }, [session, spotifyApi, playlistId]);
+    }, [session, spotifyApi, playlistId])
 
     function Profile(props) {
         const [open, setOpen] = useState(false)
@@ -79,13 +78,18 @@ function Center() {
             <section
                 className="flex items-end h-80 w-full space-x-7 p-7 bg-gradient-to-b to-zinc-900"
                 style={dominantColor && generateGradientStopStyleFromRGB(dominantColor[0], dominantColor[1], dominantColor[2])}>
-                <img
+                {playlist?.images.length > 0 ? <img
                     className="w-32 md:w-44 lg:w-56 shadow-2xl"
                     src={playlist?.images?.[0]?.url}
                     alt="Playlist-Cover-Image"
-                />
+                /> : <div className="w-32 md:w-44 lg:w-56 shadow-2xl bg-zinc-800">
+                    <MusicNoteIcon className="text-gray-400 m-12"/>
+                </div>}
                 <div className="flex flex-col space-y-1">
-                    <p>PLAYLIST</p>
+                    <div className="flex space-x-2">
+                        <p>PLAYLIST</p>
+                        {false && <PlaylistEditDialog/>}
+                    </div>
                     <h1 className="text-2xl md:text-5xl xl:text-7xl font-bold">{playlist?.name}</h1>
                     <p className="hidden md:inline text-sm text-gray-400 pt-2">{playlist?.description}</p>
                     <div className="flex space-x-1 text-sm text-gray-400">

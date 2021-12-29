@@ -12,7 +12,7 @@ function useDominantColor(imageSource) {
     }
 
     useEffect(() => {
-        if (!dominantColor) return
+        if (!imageSource || !dominantColor) return
         Vibrant.from(imageSource)
             .getPalette((err, palette) => {
                 let colors = [

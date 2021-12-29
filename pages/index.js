@@ -15,8 +15,7 @@ export default function Home() {
     const {data: session} = useSession();
     const [devices, setDevices] = useRecoilState(availableDevicesState);
     const [currentDeviceId, setCurrentDeviceId] = useRecoilState(currentDeviceIdState);
-
-
+    
     useEffect(() => {
         if (spotifyApi.getAccessToken() && devices.length === 0) {
             // Get a User's Available Devices
