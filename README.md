@@ -8,11 +8,11 @@ libraries.
 ## launch webapp
 
 ```sh
-npm run dev
+$ npm run dev
 ```
 
 ## run unittests
 
 ```sh
-npm test
+$ npm test
 ```
