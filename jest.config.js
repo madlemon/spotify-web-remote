@@ -7,11 +7,11 @@ const createJestConfig = nextJest({
 
 // Add any custom config to be passed to Jest
 const customJestConfig = {
-    setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+    setupFilesAfterEnv: ['<rootDir>/jest.setup.js', '<rootDir>/__tests__/__utils__/setUpTests.js'],
     // if using TypeScript with a baseUrl set to the root directory then you need the below for alias' to work
     moduleDirectories: ['node_modules', '<rootDir>/'],
     testEnvironment: 'jest-environment-jsdom',
-    testPathIgnorePatterns: ['/__fixtures__/', '/__utils__/'],
+    testPathIgnorePatterns: ['/__fixtures__/', '/__utils__/', '/__mocks__/'],
 }
 
 

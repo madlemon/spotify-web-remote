@@ -46,7 +46,7 @@ function Player() {
     useInterval(() => {
         fetchCurrentPlaybackState()
         fetchCurrentPlayingTrack()
-    }, 1000)
+    }, process.env.POLLING_INTERVAL)
 
 
     return (

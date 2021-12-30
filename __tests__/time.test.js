@@ -10,14 +10,9 @@ describe('test Time Utils', () => {
         expect(millisToMinutesAndSeconds(123456)).toBe('2:03')
     })
 
-    it('throws error when millis is not provided', () => {
-        expect(() => {
-            millisToMinutesAndSeconds()
-        }).toThrow()
-
-        expect(() => {
-            millisToMinutesAndSeconds(null)
-        }).toThrow()
+    it('return 0:00 when millis is not provided', () => {
+        expect(millisToMinutesAndSeconds()).toBe('0:00')
+        expect(millisToMinutesAndSeconds(null)).toBe('0:00')
     })
 })
 

@@ -3,8 +3,8 @@ import {render} from '@testing-library/react'
 import '@testing-library/jest-dom'
 import Center from "../../components/Center";
 import {SessionProvider} from "next-auth/react";
-import {mockSession} from "../__fixtures__/sessionmock";
 import {RecoilRoot} from "recoil";
+import {mockSession} from "../__mocks__/sessionmock";
 
 describe('Center component', () => {
 
