@@ -1,18 +1,11 @@
-import {render, screen, waitFor} from '@testing-library/react'
+import {screen, waitFor} from '@testing-library/react'
 import Sidebar from "../../components/Sidebar";
-import {SessionProvider} from "next-auth/react";
-import {RecoilRoot} from "recoil";
-import {mockSession} from "../__mocks__/sessionmock";
+import {renderWithSessionAndRecoil} from "../__utils__/reactUtils";
 
 describe('Sidebar component', () => {
 
     test('it renders and has \'Start\', \'Suchen\', \'Bibliothek\', \'Playlist erstellen\' and \'Lieblingssongs\'', () => {
-        render(<SessionProvider session={mockSession}>
-                <RecoilRoot>
-                    <Sidebar/>
-                </RecoilRoot>
-            </SessionProvider>
-        );
+        renderWithSessionAndRecoil(<Sidebar/>)
         expect(screen.getByText('Start')).toBeInTheDocument()
         expect(screen.getByText('Suchen')).toBeInTheDocument()
         expect(screen.getByText('Bibliothek')).toBeInTheDocument()
@@ -22,12 +15,7 @@ describe('Sidebar component', () => {
     });
 
     test('it renders playlists from spotify api', async () => {
-        render(<SessionProvider session={mockSession}>
-                <RecoilRoot>
-                    <Sidebar/>
-                </RecoilRoot>
-            </SessionProvider>
-        );
+        renderWithSessionAndRecoil(<Sidebar/>)
 
         await waitFor(() => screen.getByText('Meine Tolle Playlist'))
         expect(screen.getByText('Meine Tolle Playlist')).toBeInTheDocument()

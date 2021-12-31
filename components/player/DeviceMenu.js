@@ -33,7 +33,8 @@ function DeviceMenu(props) {
     }
 
     return (
-        <div className={`${props.className} drop-shadow-xl text-white absolute bottom-20 w-80 translate-x-[-45%]
+        <div data-testid="device-menu"
+             className={`${props.className} drop-shadow-xl text-white absolute bottom-20 w-80 translate-x-[-45%]
                             rounded-lg bg-zinc-700 p-1
                             flex flex-col space-y-1`}>
             <h2 className="text-2xl font-bold text-center">Mit Gerät verbinden</h2>

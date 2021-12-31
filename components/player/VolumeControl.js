@@ -18,7 +18,6 @@ function VolumeControl() {
                 .then(function () {
                     console.log(`Setting volume to ${newVolume}.`);
                 }, function (err) {
-                    //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
                     console.log('Something went wrong!', err);
                 });
         }, 300),
@@ -29,14 +28,17 @@ function VolumeControl() {
         <div className="flex items-center space-x-3 justify-end pr-5 volume-slider">
             {isMuted ?
                 <VolumeOffIcon
+                    data-testid="volume-on"
                     className="player-button"
                     onClick={() => setVolume(50)}
                 />
                 : <VolumeUpIcon
+                    data-testid="volume-off"
                     className="player-button"
                     onClick={() => setVolume(0)}
                 />}
             <input
+                data-testid="volume-range"
                 className="w-14 md:w-28"
                 type="range" value={volume} min={0} max={100}
                 onChange={(e) => {

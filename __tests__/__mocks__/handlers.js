@@ -1,4 +1,5 @@
 import {rest} from 'msw'
+import {spotifyMemory} from "./inMemorySpotify";
 
 export const handlers = [
 
@@ -13,4 +14,10 @@ export const handlers = [
         )
     }),
 
+    rest.put('https://api.spotify.com/v1/me/player/volume', (req, res, ctx) => {
+        spotifyMemory.volume_percent = req.url.searchParams.get('volume_percent');
+        return res(
+            ctx.status(200)
+        )
+    }),
 ]
