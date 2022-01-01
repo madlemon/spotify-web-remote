@@ -67,7 +67,7 @@ function Player() {
                 </div>
             </div>
 
-            <PlayerControl trackInfo={trackInfo} progress={progressMs}/>
+            <PlayerControl duration_ms={trackInfo.duration_ms} progress_ms={progressMs}/>
             <DeviceControl/>
             <VolumeControl/>
         </div>

@@ -16,13 +16,11 @@ function useTrackInfo() {
                         setTrackInfo(response.body)
                     )
             }
-
         }
         fetchTrackInfo();
     }, [currentTrackId, spotifyApi]);
 
     return trackInfo;
 }
-
 
 export default useTrackInfo

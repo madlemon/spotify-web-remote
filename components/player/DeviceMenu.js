@@ -24,6 +24,7 @@ function DeviceMenu(props) {
     function DeviceItem(itemProps) {
         return (
             <div
+                data-testid={itemProps.active ? 'device-item-active' : 'device-item-inactive'}
                 className={`flex items-center space-x-2 hover:bg-zinc-600 rounded-lg p-1 cursor-pointer ${itemProps.active ? "text-green-500" : ""}`}
                 onClick={itemProps.onClick}>
                 {itemProps.active ? <VolumeUpIcon className="w-8"/> : <VolumeOffIcon className="w-8"/>}

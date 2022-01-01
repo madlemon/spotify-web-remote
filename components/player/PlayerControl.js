@@ -7,7 +7,7 @@ import {currentTrackIdState, isPlayingState, isShuffleState, repeatState} from "
 import {millisToMinutesAndSeconds} from "../../lib/time";
 import {debounce} from "lodash";
 
-function PlayerControl(props) {
+function PlayerControl({duration_ms, progress_ms}) {
     const spotifyApi = useSpotify()
     const setCurrentTrackId = useSetRecoilState(currentTrackIdState)
     const [isPlaying, setIsPlaying] = useRecoilState(isPlayingState)
@@ -109,47 +109,54 @@ function PlayerControl(props) {
         <div className="flex flex-grow flex-col justify-center items-center space-y-2">
             <div className="flex items-center space-x-3">
                 <SwitchHorizontalIcon
+                    data-testid="shuffle-button"
                     className={`player-button ${isShuffle ? "!text-green-500" : ""}  hidden md:inline-flex`}
                     onClick={toggleShuffle}
                 />
                 <RewindIcon
+                    data-testid="skip-to-previous-button"
                     className="player-button"
                     onClick={skipToPrevious}
                 />
                 {isPlaying ?
                     <PauseIcon
+                        data-testid="pause-button"
                         className="player-button !text-gray-200 !w-10 !h-10"
                         onClick={pause}
                     />
                     : <PlayIcon
+                        data-testid="play-button"
                         className="player-button !text-gray-200 !w-10 !h-10"
                         onClick={play}
                     />
                 }
                 <FastForwardIcon
+                    data-testid="skip-button"
                     className="player-button"
                     onClick={skipToNext}
                 />
                 <RefreshIcon
+                    data-testid="repeat-button"
                     className={`player-button ${isRepeat ? "!text-green-500" : ""} hidden md:inline-flex`}
                     onClick={toggleRepeat}
                 />
             </div>
             <div className="volume-slider flex w-full lg:max-w-2xl items-center space-x-2 px-4 text-gray-400 text-xs">
-                <p className="">
-                    {millisToMinutesAndSeconds(props.progress)}
+                <p data-testid="progress-label">
+                    {millisToMinutesAndSeconds(progress_ms)}
                 </p>
                 <input
+                    data-testid="progress-input"
                     className="w-full"
-                    type="range" value={isSeeking ? fleetingPositionMs : props.progress} min={0} max={props.trackInfo.duration_ms}
+                    type="range" value={isSeeking ? fleetingPositionMs : progress_ms} min={0} max={duration_ms}
                     onChange={(e) => {
                         let newPositionMs = Number(e.target.value)
                         setFleetingPositionMs(newPositionMs)
                         setIsSeeking(true)
                     }}
                 />
-                <p className="">
-                    {millisToMinutesAndSeconds(props.trackInfo.duration_ms)}
+                <p data-testid="duration-label">
+                    {millisToMinutesAndSeconds(duration_ms)}
                 </p>
             </div>
         </div>

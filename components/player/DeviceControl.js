@@ -14,8 +14,11 @@ function DeviceControl() {
                     className="player-button mr-2"
                     onClick={() => setIsOpen(!isOpen)}/>
             </div>
-            {isOpen && <div className="fixed w-screen h-screen top-0 left-0"
-                            onClick={() => setIsOpen(!isOpen)}/>}
+            {isOpen && <div
+                data-testid="outside-device-menu"
+                className="fixed w-screen h-screen top-0 left-0"
+                onClick={() => setIsOpen(!isOpen)}
+            />}
             {isOpen && <DeviceMenu className="absolute bottom-20 translate-x-[-45%]"/>}
         </div>
     )
