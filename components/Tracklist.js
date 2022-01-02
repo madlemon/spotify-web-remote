@@ -1,27 +1,13 @@
-import React, {useCallback, useRef, useState} from 'react';
+import React, {useState} from 'react';
 import Track from "./Track";
 import usePlaylist from "../hooks/usePlaylist";
 import TrackLoadingSkeleton from "./TrackLoadingSkeleton";
 import {ClockIcon, HashtagIcon} from "@heroicons/react/outline";
 
 function Tracklist() {
-    const [offset, setOffset] = useState(0);
-    const {playlist, loading, error, tracks, hasMore} = usePlaylist(offset);
+    const {playlist, tracks, loading, error, loadOnIntersectRef} = usePlaylist();
     const [selectedTrack, setSelectedTrack] = useState(null);
 
-    const observer = useRef();
-    const lastTrackElementRef = useCallback(node => {
-            if (loading) return
-            if (observer.current) observer.current.disconnect()
-
-            observer.current = new IntersectionObserver(entries => {
-                if (entries[0].isIntersecting && hasMore) {
-                    setOffset(tracks.length)
-                }
-            })
-            if (node) observer.current.observe(node);
-        }
-    );
 
     return (
         <div className="px-4 flex flex-col space-y-1 pb-36 text-gray-400">
@@ -51,7 +37,7 @@ function Tracklist() {
                             setSelectedTrack(track.track.id)
                     }}
                     highlighted={selectedTrack === track.track.id}
-                    trackRef={hasMore && tracks.length === i + 1 ? lastTrackElementRef : null}
+                    trackRef={tracks.length === i + 1 ? loadOnIntersectRef : null}
                     context_uri={playlist?.uri}
                 />
             ))}

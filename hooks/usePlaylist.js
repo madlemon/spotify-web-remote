@@ -1,18 +1,20 @@
 import useSpotify from "./useSpotify";
-import {useSession} from "next-auth/react";
 import {useRecoilValue} from "recoil";
 import {playlistIdState, playlistState} from "../atoms/playlistAtom";
 import {useEffect, useState} from "react";
+import useInfinteScrolling from "./useInfinteScrolling";
 
-function usePlaylist(offset = 0) {
+function usePlaylist() {
     const spotifyApi = useSpotify()
-    const {data: session} = useSession();
     const playlistId = useRecoilValue(playlistIdState)
     const playlist = useRecoilValue(playlistState);
+    const [offset, setOffset] = useState(0);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [tracks, setTracks] = useState([])
     const [hasMore, setHasMore] = useState(false);
+
+    const {loadOnIntersectRef} = useInfinteScrolling(loading, tracks, hasMore, setOffset);
 
     const limit = 50
 
@@ -35,7 +37,7 @@ function usePlaylist(offset = 0) {
             }).catch(() => setError(true))
     }, [offset, playlistId])
 
-    return {playlist, loading, error, tracks, hasMore}
+    return {playlist, tracks, loading, error, loadOnIntersectRef}
 }
 
 export default usePlaylist

@@ -1,25 +1,13 @@
 import {HomeIcon, MenuAlt3Icon, PlusIcon, RssIcon, SearchIcon} from "@heroicons/react/outline";
 import {HeartIcon} from "@heroicons/react/solid";
-import {useSession} from "next-auth/react";
-import useSpotify from "../hooks/useSpotify";
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {useRecoilState} from "recoil";
 import {playlistIdState} from "../atoms/playlistAtom";
+import useUserPlaylists from "../hooks/useUserPlaylists";
 
 function Sidebar() {
-    const spotifyApi = useSpotify();
-    const {data: session} = useSession();
-    const [playlists, setPlaylists] = useState([]);
+    const {loading, error, userPlaylists, loadOnIntersectRef} = useUserPlaylists();
     const [playlistId, setPlaylistId] = useRecoilState(playlistIdState);
-
-    useEffect(() => {
-        if (!spotifyApi.getAccessToken()) {
-            return;
-        }
-        spotifyApi.getUserPlaylists().then((data) => {
-            setPlaylists(data.body.items);
-        })
-    }, [session, spotifyApi]);
 
     return (
         <div
@@ -65,15 +53,30 @@ function Sidebar() {
                 <hr className="border-t-[0.1px] border-gray-900 "/>
             </div>
             <div className="flex flex-col flex-auto overflow-y-scroll scrollbar-hide pb-36">
-                {playlists.map((playlist) => (
+
+                {userPlaylists.map((playlist, index) => (
                     <p key={playlist.id}
                        className={`cursor-pointer hover:text-white mt-4 
                        ${playlistId === playlist.id ? "text-white" : ""}`}
                        onClick={() => setPlaylistId(playlist.id)}
+                       ref={userPlaylists.length === index + 1 ? loadOnIntersectRef : null}
                     >
                         {playlist.name}
                     </p>
                 ))}
+                {error && <span
+                    key={"error"}
+                    className={"bg-red-400 text-red-800 rounded-lg w-full p-1"}
+                >
+                    Error loading your playlists!
+                </span>}
+                {loading &&
+                ["opacity-100", "opacity-50", "opacity-10"].map(opacity => (
+                    <div
+                        key={opacity}
+                        className={`${opacity} bg-zinc-700 animate-pulse rounded-lg w-1/2 h-3 mt-4`}>
+                        &nbsp;
+                    </div>))}
             </div>
         </div>
     );

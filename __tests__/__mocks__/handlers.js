@@ -10,7 +10,10 @@ export const handlers = [
                 items: [
                     {id: '1', name: 'Meine Tolle Playlist'},
                     {id: '2', name: 'Mal was anderes'},
-                ]
+                ],
+                limit: 20,
+                offset: 0,
+                total: 2,
             })
         )
     }),
