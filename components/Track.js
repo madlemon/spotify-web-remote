@@ -10,6 +10,7 @@ function Track({track, tracknumber, onClick, highlighted, trackRef, context_uri}
     const spotifyApi = useSpotify();
     const [currentTrackId, setCurrentTrackId] = useRecoilState(currentTrackIdState);
     const [isPlaying, setIsPlaying] = useRecoilState(isPlayingState);
+
     const playTrack = event => {
         event.stopPropagation();
         setCurrentTrackId(track.track.id);
@@ -34,10 +35,12 @@ function Track({track, tracknumber, onClick, highlighted, trackRef, context_uri}
 
     const dynamicClassname = `w-7 text-white ${highlighted ? "" : "hidden group-hover:inline"} cursor-pointer`;
     return (
-        <div className={`grid grid-cols-2 rounded-lg px-4 py-2 group 
+        <div
+            data-testid="track-item"
+            className={`grid grid-cols-2 rounded-lg px-4 py-2 group 
                          ${highlighted ? "bg-zinc-600" : "hover:bg-zinc-800"}`}
-             onClick={onClick}
-             ref={trackRef}>
+            onClick={onClick}
+            ref={trackRef}>
             <div className="flex items-center space-x-4">
                 <div>
                     {currentTrackIsPlayed ? <MusicNoteIcon
@@ -51,10 +54,12 @@ function Track({track, tracknumber, onClick, highlighted, trackRef, context_uri}
                     {
                         currentTrackIsPlayed ?
                             <PauseIcon
+                                data-testid="track-item-pause-button"
                                 className={dynamicClassname}
                                 onClick={pauseTrack}
                             /> :
                             <PlayIcon
+                                data-testid="track-item-play-button"
                                 className={dynamicClassname}
                                 onClick={playTrack}
                             />

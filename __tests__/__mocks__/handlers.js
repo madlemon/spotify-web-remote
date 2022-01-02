@@ -1,5 +1,6 @@
 import {rest} from 'msw'
 import {spotifyMemory} from "./inMemorySpotify";
+import {getPlaylistTracksResponse} from "./apiResponses";
 
 export const handlers = [
 
@@ -11,6 +12,12 @@ export const handlers = [
                     {id: '2', name: 'Mal was anderes'},
                 ]
             })
+        )
+    }),
+
+    rest.get('https://api.spotify.com/v1/playlists/:playlistId/tracks', (req, res, ctx) => {
+        return res(
+            ctx.json({getPlaylistTracksResponse})
         )
     }),
 
@@ -69,6 +76,7 @@ export const handlers = [
             ctx.status(200)
         )
     }),
+
     rest.put('https://api.spotify.com/v1/me/player/seek', (req, res, ctx) => {
         let positionMs = req.url.searchParams.get('position_ms');
         console.log('positionMs >>>', positionMs)

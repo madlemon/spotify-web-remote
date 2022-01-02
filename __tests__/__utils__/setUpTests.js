@@ -1,4 +1,5 @@
 const {spotifyServer} = require("../__mocks__/spotifyServer");
+require('intersection-observer');
 
 process.env.NEXT_PUBLIC_CLIENT_ID = "123"
 process.env.NEXT_PUBLIC_CLIENT_SECRET = "456"

@@ -1,7 +1,8 @@
 function TrackLoadingSkeleton({className}) {
 
     return (
-        <div className={`${className} animate-pulse grid grid-cols-2 rounded-lg px-4 py-2 group`}>
+        <div data-testid="track-skeleton"
+             className={`${className} animate-pulse grid grid-cols-2 rounded-lg px-4 py-2 group`}>
             <div className="flex items-center space-x-4">
                 <div>
                     <div className="w-7 h-4 bg-zinc-700 rounded-lg"/>
