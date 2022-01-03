@@ -16,11 +16,8 @@ function useDominantColor(imageSource) {
         Vibrant.from(imageSource)
             .getPalette((err, palette) => {
                 let colors = [
-                    palette.DarkMuted,
                     palette.DarkVibrant,
-                    palette.LightMuted,
                     palette.LightVibrant,
-                    palette.Muted,
                     palette.Vibrant,]
                 let mostPopulatedColor = sortByPopulation(colors).pop()
                 setDominantColor(mostPopulatedColor._rgb)
