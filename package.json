@@ -9,7 +9,6 @@
   "dependencies": {
     "@heroicons/react": "^1.0.5",
     "lodash": "^4.17.21",
-    "lowdash": "^1.2.0",
     "next": "latest",
     "node-vibrant": "^3.2.1-alpha.1",
     "react": "^17.0.2",
