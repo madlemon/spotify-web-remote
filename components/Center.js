@@ -89,7 +89,7 @@ function Center() {
                 <div className="flex flex-col space-y-1">
                     <div className="flex space-x-2">
                         <p>PLAYLIST</p>
-                        {<PlaylistEditDialog/>}
+                        {<PlaylistEditDialog callback={(data) => console.log(data)}/>}
                     </div>
                     <h1 className="text-2xl md:text-5xl xl:text-7xl font-bold">{playlist?.name}</h1>
                     <p className="hidden md:inline text-sm text-gray-400 pt-2">{playlist?.description}</p>
