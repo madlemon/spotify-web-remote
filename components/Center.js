@@ -7,6 +7,7 @@ import useSpotify from "../hooks/useSpotify";
 import {generateGradientStopStyleFromRGB} from "../lib/color";
 import useDominantColor from "../hooks/useDominantColor";
 import Tracklist from "./Tracklist";
+import PlaylistEditDialog from "./PlaylistEditDialog";
 
 function Center() {
     const spotifyApi = useSpotify()
@@ -88,7 +89,7 @@ function Center() {
                 <div className="flex flex-col space-y-1">
                     <div className="flex space-x-2">
                         <p>PLAYLIST</p>
-                        { /*<PlaylistEditDialog/>*/}
+                        {<PlaylistEditDialog/>}
                     </div>
                     <h1 className="text-2xl md:text-5xl xl:text-7xl font-bold">{playlist?.name}</h1>
                     <p className="hidden md:inline text-sm text-gray-400 pt-2">{playlist?.description}</p>
